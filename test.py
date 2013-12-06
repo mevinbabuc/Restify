@@ -62,7 +62,7 @@ def CSOR_Jsonify(func):
 
     return wrapper
 
-class ResT(webapp2.RequestHandler):
+class ReST(webapp2.RequestHandler):
     """ Class to handle requests (GET, POST, DELETE) to the route /api/ . """
 
 
@@ -91,9 +91,6 @@ class ResT(webapp2.RequestHandler):
         key=False
         json_args_dic = None
 
-        # NoteTitle = self.request.get("title")
-        # NoteHashtags = self.request.get("hashtags")
-
         node = self.request.path_info.split('/')
         if node[-1] == '':
             node.pop(-1)
@@ -106,6 +103,7 @@ class ResT(webapp2.RequestHandler):
             json_args_dic = json.loads(_json,encoding="utf-8")
         except:
             json_args_dic = None
+            self.abort(400)
 
         if json_args_dic:
             HashEntry=_model(author=users.get_current_user(), **json_args_dic)
@@ -159,6 +157,8 @@ class ResT(webapp2.RequestHandler):
                 Object_by_id = _model.get_by_id(int(node[3]))
             elif node[2] and _model:
                 qry = _model.query().filter(_model.author == users.get_current_user())
+            else:
+                self.abort(404)
 
         dataList=[]
 
@@ -198,8 +198,7 @@ class ResT(webapp2.RequestHandler):
                                 HashStore
             204 -> No Content-> When data is found in the HashStore and deleted,
                                 so there's no content to return
-            400 -> Bad Request->When invalid query( Hashtag) was passed to the 
-                                delete request
+            400 -> Bad Request->When invalid delete request was made
 
         """
 
@@ -219,14 +218,16 @@ class ResT(webapp2.RequestHandler):
 
             if _model:
                 Object_by_id = _model.get_by_id(int(node[3]))
+        else:
+            self.abort(404)
 
         if Object_by_id:
             Object_by_id.key.delete()
             self.response.set_status(204,"No Content")
         elif not _model:
-            self.abort(400)
-        else:
             self.abort(404)
+        else:
+            self.abort(400)
 
         return {}
 
@@ -272,6 +273,8 @@ class ResT(webapp2.RequestHandler):
             #check if the id is a valid one
             if _model:
                 Object_by_id = _model.get_by_id(int(node[3]))
+            else:
+                self.abort(404)
 
             # if data already present in server, then modify
             if Object_by_id:
@@ -287,8 +290,12 @@ class ResT(webapp2.RequestHandler):
                     status['object'] = json_args_dic
                     HashEntry=_model(author=users.get_current_user(), **json_args_dic)
                     key=HashEntry.put()
+                else:
+                    self.abort(400)
+            else:
+                self.abort(404)
         else:
-            self.abort(400)
+            self.abort(404)
 
         if HashEntry:
             self.response.set_status(200,"Ok")
