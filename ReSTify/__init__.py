@@ -1,5 +1,7 @@
 # ReSTify
-# A simple lightweight barebone ReST framework for appengine
+# ReST interface for appengine
+#
+# ReSTify is a ready to deploy Rest interfae for your appengine datastore for testing purposes.
 #
 # Copyright 2013 Mevin Babu Chirayath <mevinbabuc@gmail.com>
 #
@@ -19,16 +21,15 @@
 __author__ = 'mevinbabuc@gmail.com (Mevin Babu Chirayath)'
 __version__ = "0.1"
 
-# import httplib2
-# import logging
 import os
+import sys
 
 from google.appengine.api import users
 
 import webapp2
 import json
 
-import model
+from model import *
 
 def CSOR_Jsonify(func):
     """ decorator to make all requests CSOR compatible and jsonfy the output """
@@ -37,6 +38,7 @@ def CSOR_Jsonify(func):
 
         def datetimeconvert(obj):
             """datetimeconvert JSON serializer."""
+            
             import datetime
 
             if isinstance(obj, datetime.datetime):
@@ -63,7 +65,7 @@ def CSOR_Jsonify(func):
     return wrapper
 
 class ReST(webapp2.RequestHandler):
-    """ Class to handle requests (GET, POST, DELETE) to the route /api/ . """
+    """ Class to handle requests (GET, POST, DELETE, PUT) to the route /api/ . """
 
 
     @CSOR_Jsonify
@@ -78,7 +80,7 @@ class ReST(webapp2.RequestHandler):
             status['success']
             status['error']
 
-        Exceptions/response status codes :
+        response status codes :
             201 -> Created   -> When a new object was saved in HashStore
             404 -> Not Found -> When the post variables title and hashtags was
                                 blank or NULL
@@ -158,6 +160,7 @@ class ReST(webapp2.RequestHandler):
             elif node[2] and _model:
                 qry = _model.query().filter(_model.author == users.get_current_user())
             else:
+                print str(_model)
                 self.abort(404)
 
         dataList=[]
@@ -317,10 +320,3 @@ class ReST(webapp2.RequestHandler):
         self.response.headers.add_header("Access-Control-Allow-Credentials", "true")
         self.response.headers.add_header("Access-Control-Allow-Headers",
          "origin, x-requested-with, content-type, accept")
-
-
-application = webapp2.WSGIApplication(
-    [
-        ('/api/.*', ResT),
-        ],
-    debug=True)

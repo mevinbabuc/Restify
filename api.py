@@ -1,9 +1,16 @@
 import webapp2
 
-import Restify
+import ReSTify
+
+class LandingPage(webapp2.RequestHandler):
+	""" Landing Page """
+
+	def get(self):
+		self.response.write("Welcome buddy!")
 
 application = webapp2.WSGIApplication(
     [
-        ('/api/.*', Restify.ReST),
+        ('/api/.*', ReSTify.ReST),
+        ('/',LandingPage),
         ],
     debug=True)
