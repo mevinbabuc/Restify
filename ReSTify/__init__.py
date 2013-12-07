@@ -65,12 +65,12 @@ def CSOR_Jsonify(func):
     return wrapper
 
 class ReST(webapp2.RequestHandler):
-    """ Class to handle requests (GET, POST, DELETE, PUT) to the route /api/ . """
+    """ Class to handle requests (GET, POST, DELETE, PUT) to the route /api/ """
 
 
     @CSOR_Jsonify
     def post(self,query=""):
-        """Post Request handler to add data to the HashStore
+        """Post Request handler to add data to the datastore
 
         Args:
 
@@ -81,9 +81,8 @@ class ReST(webapp2.RequestHandler):
             status['error']
 
         response status codes :
-            201 -> Created   -> When a new object was saved in HashStore
-            404 -> Not Found -> When the post variables title and hashtags was
-                                blank or NULL
+            201 -> Created   -> When a new object is succesfully saved in the datastore
+            404 -> Not Found -> When the post body is invalid or null
 
         """
 
@@ -124,16 +123,15 @@ class ReST(webapp2.RequestHandler):
 
     @CSOR_Jsonify
     def get(self,query=""):
-        """Get request handler to retrieve the list of Tabs saved in the HashStore
+        """Get request handler to retrieve data from datastore
 
         Args:
 
         Return:
-            An object containing all the Tabs of the logged in user.Each tab 
-            contains title, hashtag and the date it was created.
+            An object containing all the entities of the logged in user.
 
         Response status codes :
-            404 -> Not Found -> When there's no data in the HashStore for the
+            404 -> Not Found -> When there's no data in the datastore for the
                                 particular user
             400 -> Bad Request->When the program is unable to search db etc.
                                 Try again later.
@@ -187,19 +185,16 @@ class ReST(webapp2.RequestHandler):
 
     @CSOR_Jsonify
     def delete(self,query=""):
-        """Delete request handler to delete a Tab from HashStore
+        """Delete request handler to delete an entity from datastore
 
         Args:
-            query: Accepts tabs(Hashtag) that has to be deleted for the 
-            particular user
 
         Return:
             Delete request is not supposed to return any value
 
         Response status codes :
-            404 -> Not Found -> When the data to be deleted is not found in the 
-                                HashStore
-            204 -> No Content-> When data is found in the HashStore and deleted,
+            404 -> Not Found -> When the data to be deleted is not found
+            204 -> No Content-> When data is found in the datastore and deleted,
                                 so there's no content to return
             400 -> Bad Request->When invalid delete request was made
 
@@ -236,20 +231,18 @@ class ReST(webapp2.RequestHandler):
 
     @CSOR_Jsonify
     def put(self,query=""):
-        """PUT request handler to edit a Tab from HashStore
+        """PUT request handler to edit an entity from datastore
 
         Args:
-            query: Accepts tabs(Hashtag) that has to be deleted for the 
-            particular user
 
         Return:
             returns the edited object
 
         Response status codes :
             404 -> Not Found -> When the data to be deleted is not found in the 
-                                HashStore
-            200 -> Ok        -> When data is found in the HashStore and edited
-            400 -> Bad Request->When invalid query( Hashtag) was passed to the 
+                                datastore
+            200 -> Ok        -> When data is found in the datastore and edited
+            400 -> Bad Request->When invalid id or model name was used to make 
                                 put request
 
         """
