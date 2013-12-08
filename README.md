@@ -21,39 +21,24 @@ A ReST interface for appengine datastore.Restify accepts and returns data only i
 
 #### GET:
 
-Retrieve all the entities in the particular datastore
+Retrieve all the entities in the particular datastore `/api/<model_name>/`
 
-
-/api/**model_name**/
-
-Gets information about an entity
-
-
-/api/**model_name**/**id**/
+Gets information about an entity `/api/<model_name>/<id>/`
 
 
 #### POST:
 
-Create an entity in the particular datastore
-
-
-/api/**model_name**/
+Create an entity in the particular datastore `/api/<model_name>/`
 
 
 #### DELETE:
 
-Delete a particular entity
-
-
-/api/**model_name**/**id**/
+Delete a particular entity `/api/<model_name>/<id>/`
 
 
 #### PUT:
 
-Edit a particular entity
-
-
-/api/**model_name**/**id**/
+Edit a particular entity `/api/<model_name>/<id>/`
 
 
 ## Response status codes
