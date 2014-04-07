@@ -31,9 +31,10 @@ import json
 
 from model import *
 import settings
-get_model_from_URL = settings.MODEL_NAME_ALIAS
 
 def get_model_from_URL(node_name):
+    
+    # Get the corresponding model name from URL
     model_alias = settings.MODEL_NAME_ALIAS[node_name]
     return getattr(model, model_alias)
 
