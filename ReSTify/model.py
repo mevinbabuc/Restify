@@ -1,8 +1,12 @@
+/* Define your database model over here */
+
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
 class HashStore(ndb.Model):
-    """Models an individual HashStore entry with hastag, tile, and date."""
+    """Sample Model
+    Models an individual HashStore entry with hastag, tile, and date.
+    """
 
     author = ndb.UserProperty()
     title = ndb.StringProperty(indexed=False)
