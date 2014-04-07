@@ -30,6 +30,7 @@ import webapp2
 import json
 
 from model import *
+import settings
 
 def CSOR_Jsonify(func):
     """ decorator to make all requests CSOR compatible and jsonfy the output """
@@ -51,7 +52,7 @@ def CSOR_Jsonify(func):
         try:
             _origin = args[0].request.headers['Origin']
         except:
-            _origin = "http://gcdc2013-keeptabson.appspot.com/"
+            _origin = settings.ORIGIN_SITE_NAME
 
         args[0].response.headers.add_header("Access-Control-Allow-Origin", _origin)
         args[0].response.headers.add_header("Access-Control-Allow-Credentials", "true")
@@ -304,7 +305,7 @@ class ReST(webapp2.RequestHandler):
         try:
             _origin = self.request.headers['Origin']
         except:
-            _origin = "http://gcdc2013-keeptabson.appspot.com/"
+            _origin = settings.ORIGIN_SITE_NAME
 
         self.response.set_status(200,"Ok")
         self.response.headers.add_header("Access-Control-Allow-Origin", _origin)
