@@ -33,6 +33,10 @@ from model import *
 import settings
 get_model_from_URL = settings.MODEL_NAME_ALIAS
 
+def get_model_from_URL(node_name):
+    model_alias = settings.MODEL_NAME_ALIAS[node_name]
+    return getattr(model, model_alias)
+
 def CSOR_Jsonify(func):
     """ decorator to make all requests CSOR compatible and jsonfy the output """
 
@@ -98,7 +102,7 @@ class ReST(webapp2.RequestHandler):
         if node[-1] == '':
             node.pop(-1)
 
-        _model = getattr(model, get_model_from_URL[node[2]])
+        _model = get_model_from_URL(node[2])
 
         _json = self.request.body.encode("utf-8")
 
@@ -151,7 +155,7 @@ class ReST(webapp2.RequestHandler):
         if len(node) - 1 >= 2:
             if node[2]:
                 try:
-                    _model = getattr(model, get_model_from_URL[node[2]])
+                    _model = get_model_from_URL(node[2])
                 except:
                     _model = None
 
@@ -212,7 +216,7 @@ class ReST(webapp2.RequestHandler):
         if len(node) - 1 > 2:
             if node[2]:
                 try:
-                    _model = getattr(model, get_model_from_URL[node[2]])
+                    _model = get_model_from_URL(node[2])
                 except:
                     _model = None
 
@@ -264,7 +268,7 @@ class ReST(webapp2.RequestHandler):
         if len(node) - 1 > 2:
             if node[2]:
                 try:
-                    _model = getattr(model, get_model_from_URL[node[2]])
+                    _model = get_model_from_URL(node[2])
                 except:
                     _model = None
 
