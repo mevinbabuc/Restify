@@ -1,4 +1,4 @@
-/* Define your database model over here */
+# Define your database model over here
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
