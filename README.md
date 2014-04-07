@@ -17,6 +17,21 @@ Restify accepts and returns data in JSON format.Restify is CSOR compatible. Rest
 	        ],
 	    debug=True)
 
+## Files
+
+#### ReSTify/model.py:
+
+Define your datastore models over here.
+
+#### ReSTify/settings.py:
+
+###### ORIGIN_SITE_NAME
+
+Define the URL for the site where the Requests originate (Server URL where the front-end is hosted)
+
+###### MODEL_NAME_ALIAS
+
+Define alias names for DataStore models for neater looking URL's and if you dont want to make your model names public
 
 ## Request syntax
 
