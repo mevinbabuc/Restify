@@ -1,7 +1,8 @@
 Restify
 =======
+A ReST interface for appengine datastore.
 
-A ReST interface for appengine datastore.Restify accepts and returns data only in JSON format.Restify is CSOR compatible.
+Restify accepts and returns data in JSON format.Restify is CSOR compatible. Restify was built as a tool to aid front-end development in the absence of a proper backend. Restify helps us in setting up a backend rest server in minimal time. All you have to do is define your database model in ReSTify/model.py file and write the small snippet of code below.
 
 
 ## Get Started
